@@ -8,5 +8,8 @@ declare module "styled-components" {
       red: "salmon";
       blue: "skyblue";
     };
+    utils: {
+      grid__center: FlattenSimpleInterpolation;
+    };
   }
 }
