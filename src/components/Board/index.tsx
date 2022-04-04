@@ -1,12 +1,14 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Cell from "../Cell";
+
+import { Turn } from "../../Types";
 import { checkGameEnd } from "../../utils/checkGameEnd";
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
 
 export const Board = () => {
-  const [turn, setTurn] = useState<"X" | "O">("X");
+  const [turn, setTurn] = useState<Turn>("X");
   const [board, setBoard] = useState<string[][]>(BOARD);
 
   const clickCell = (row: number, col: number) => {
