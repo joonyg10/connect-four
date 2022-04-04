@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { InitTurn, GameState } from "./Types";
 
 // [components]
+import { StartPage } from "./components/StartPage";
 import { Board } from "./components/Board";
 import Modal from "./components/Modal";
 
@@ -11,17 +13,17 @@ import { theme } from "./styles/theme";
 
 // @@ App
 function App() {
-  const [gameState, setGameState] = useState<"GAME" | "OVER">("OVER");
+  const [gameState, setGameState] = useState<GameState>("START");
 
-  const restartGame = () => {
-    setGameState("GAME");
-  };
+  const startGame = (turn: InitTurn) => turn && setGameState("GAME");
+  const restartGame = () => setGameState("GAME");
 
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <Board />
+        {gameState === "START" && <StartPage startGame={startGame} />}
+        {gameState === "GAME" && <Board />}
         {gameState === "OVER" && (
           <Modal restartGame={restartGame} winner="DRAW" />
         )}
