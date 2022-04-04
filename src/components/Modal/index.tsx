@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Button } from "../Button";
 interface Props {
   winner: "X" | "O" | "DRAW";
   restartGame: () => void;
@@ -42,17 +42,4 @@ const Container = styled.div`
 const Text = styled.p`
   font-size: 2rem;
   font-weight: bold;
-`;
-
-const Button = styled.button`
-  padding: 2em 3em;
-  border-radius: 1em;
-  box-shadow: 0 0 10px 1px gray;
-  cursor: pointer;
-  transition: all 350ms ease-out;
-
-  &:hover {
-    background-color: grey;
-    color: #fff;
-  }
 `;
