@@ -1,6 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import Cell from "../Cell";
+import { checkGameEnd } from "../../utils/checkGameEnd";
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
 
@@ -14,6 +15,12 @@ export const Board = () => {
 
     const newBoard = [...board];
     updateBoard(newBoard, row, col);
+    const isGameEnd = checkGameEnd({ newBoard, row, col, flag: turn });
+
+    if (isGameEnd) {
+      window.alert(`Game over! ${turn} win!`);
+    }
+
     changeTurn();
   };
 
