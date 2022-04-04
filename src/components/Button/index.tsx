@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   size?: "lg" | "md";
-  color?: "red" | "blue";
+  color?: string;
   selected?: boolean;
   onClick?: (...args: any[]) => void;
   children: React.ReactNode;
