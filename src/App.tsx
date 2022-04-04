@@ -1,3 +1,6 @@
+// [components]
+import { Board } from "./components/Board";
+
 // @@ [styles]
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/globalStyle";
@@ -9,7 +12,7 @@ function App() {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        <></>
+        <Board />
       </ThemeProvider>
     </>
   );
