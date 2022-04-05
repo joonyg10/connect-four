@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 import Cell from "../Cell";
 
@@ -6,6 +7,18 @@ import { Turn } from "../../Types";
 import { checkGameEnd } from "../../utils/checkGameEnd";
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
+const variants = {
+  initial: {
+    scale: 0,
+  },
+  pop: {
+    scale: [0.5, 1, 1.25, 0.85, 1],
+    transition: {
+      type: "tween",
+      duration: 0.5,
+    },
+  },
+};
 
 export const Board = () => {
   const [turn, setTurn] = useState<Turn>("X");
@@ -17,12 +30,9 @@ export const Board = () => {
 
     const newBoard = [...board];
     updateBoard(newBoard, row, col);
+
     const isGameEnd = checkGameEnd({ newBoard, row, col, flag: turn });
-
-    if (isGameEnd) {
-      window.alert(`Game over! ${turn} win!`);
-    }
-
+    if (isGameEnd) window.alert(`Game over! ${turn} win!`);
     changeTurn();
   };
 
@@ -56,7 +66,11 @@ export const Board = () => {
   );
 };
 
-const Container = styled.section<{ turn: string }>`
+const Container = styled(motion.section).attrs(() => ({
+  initial: "initial",
+  animate: "pop",
+  variants,
+}))<{ turn: string }>`
   ${({ theme }) => theme.grid__center};
 
   border-radius: 1rem;
