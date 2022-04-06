@@ -9,8 +9,8 @@ interface Props {
 }
 
 const BTN: [Turn, string][] = [
-  ["O", "red"],
-  ["X", "blue"],
+  ["O", "blue"],
+  ["X", "red"],
 ];
 
 const variants = {
