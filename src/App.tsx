@@ -2,9 +2,7 @@ import { useState } from "react";
 import { InitTurn, GameState, Turn, Winner } from "./Types";
 
 // [components]
-import { StartPage } from "./components/StartPage";
-import { Board } from "./components/Board";
-import Modal from "./components/Modal";
+import { StartPage, Board, Modal } from "./components";
 
 // @@ [styles]
 import { ThemeProvider } from "styled-components";
