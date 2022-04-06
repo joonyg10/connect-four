@@ -12,6 +12,22 @@ export const popUp = {
   },
 };
 
+export const cellPopUp = {
+  initial: {
+    scale: 0,
+  },
+  pop: {
+    scale: 1,
+    rotate: [-30, 30, -15, 15, 0],
+    transition: {
+      type: "spring",
+      damp: 3,
+      stiffness: 100,
+      duration: 0.3,
+    },
+  },
+};
+
 export const backDrop = {
   initial: { scale: 0, opacity: 0 },
   animate: {

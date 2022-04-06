@@ -1,24 +1,11 @@
 import React from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import { cellPopUp } from "../../constant/variants";
 
 interface Props {
   flag: string;
 }
-
-const variants = {
-  initial: { scale: 0 },
-  pop: {
-    scale: 1,
-    rotate: [-30, 30, -15, 15, 0],
-    transition: {
-      type: "spring",
-      damp: 3,
-      stiffness: 100,
-      duration: ".3",
-    },
-  },
-};
 
 const Cell = ({ flag }: Props) => {
   return <>{flag && <Container flag={flag}>{flag}</Container>}</>;
@@ -29,7 +16,7 @@ export default React.memo(Cell);
 const Container = styled(motion.div).attrs(() => ({
   initial: "initial",
   animate: "pop",
-  variants,
+  variants: cellPopUp,
 }))<{ flag: string }>`
   position: relative;
   ${({ theme }) => theme.utils.grid__center};
