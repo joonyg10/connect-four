@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import Cell from "../Cell";
@@ -14,12 +14,9 @@ interface Props {
 }
 
 const SIDE = 9;
-const BOARD: string[][] = Array.from({ length: SIDE }, (_) =>
-  Array(SIDE).fill("")
-);
 
 export const Board = ({ turn, setTurn, showResult }: Props) => {
-  const [board, setBoard] = useState<string[][]>(BOARD);
+  const [board, setBoard] = useState<string[][]>([]);
   const [leftCells, setLeftCells] = useState<number>(SIDE ** 2);
 
   const clickCell = (row: number, col: number) => {
@@ -48,9 +45,19 @@ export const Board = ({ turn, setTurn, showResult }: Props) => {
     setBoard(newBoard);
   };
 
+  useEffect(() => {
+    setBoard(generateBoard());
+
+    function generateBoard() {
+      return Array.from({ length: SIDE }, () => Array(SIDE).fill(""));
+    }
+
+    return () => setBoard([]);
+  }, []);
+
   return (
     <Container turn={turn}>
-      {BOARD.map((ROW: string[], rowIdx: number) => (
+      {board.map((ROW: string[], rowIdx: number) => (
         <Row key={rowIdx}>
           {ROW.map((_, colIdx: number) => (
             <CellWrapper
