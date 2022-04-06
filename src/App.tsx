@@ -33,7 +33,9 @@ function App() {
             <StartPage startGame={startGame} key="start_container" />
           )}
         </AnimatePresence>
-        {gameState === "GAME" && <Board turn={turn} setTurn={setTurn} />}
+        {gameState === "GAME" && (
+          <Board turn={turn} setTurn={setTurn} setGameState={setGameState} />
+        )}
         {gameState === "OVER" && (
           <Modal restartGame={restartGame} winner="DRAW" />
         )}

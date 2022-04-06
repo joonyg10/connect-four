@@ -5,15 +5,16 @@ import Cell from "../Cell";
 
 import { checkGameEnd } from "../../utils/checkGameEnd";
 import { popUp } from "../../constant/variants";
-import { Turn } from "../../Types";
+import { Turn, GameState } from "../../Types";
 interface Props {
   turn: Turn;
   setTurn: React.Dispatch<SetStateAction<Turn>>;
+  setGameState: React.Dispatch<SetStateAction<GameState>>;
 }
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
 
-export const Board = ({ turn, setTurn }: Props) => {
+export const Board = ({ turn, setTurn, setGameState }: Props) => {
   const [board, setBoard] = useState<string[][]>(BOARD);
 
   const clickCell = (row: number, col: number) => {
@@ -24,7 +25,7 @@ export const Board = ({ turn, setTurn }: Props) => {
     updateBoard(newBoard, row, col);
 
     const isGameEnd = checkGameEnd({ newBoard, row, col, flag: turn });
-    if (isGameEnd) window.alert(`Game over! ${turn} win!`);
+    if (isGameEnd) setGameState("OVER");
     changeTurn();
   };
 
