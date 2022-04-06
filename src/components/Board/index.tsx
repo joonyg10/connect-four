@@ -14,7 +14,6 @@ interface Props {
 }
 
 const SIDE = 9;
-let isAnimate: boolean = false;
 
 export const Board = ({ turn, setTurn, showResult }: Props) => {
   const [board, setBoard] = useState<string[][]>([]);
@@ -23,7 +22,6 @@ export const Board = ({ turn, setTurn, showResult }: Props) => {
   const clickCell = (row: number, col: number) => {
     // 이미 점령되어 있는 칸이라면 pass
     if (board[row][col] !== "") return;
-    if (isAnimate) return;
 
     const newBoard = [...board];
     updateBoard(newBoard, row, col);
@@ -37,7 +35,6 @@ export const Board = ({ turn, setTurn, showResult }: Props) => {
 
   const changeTurn = () => {
     setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
-
     setLeftCells((prevCells) => prevCells - 1);
   };
 
