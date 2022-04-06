@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InitTurn, GameState } from "./Types";
+import { InitTurn, GameState, Turn } from "./Types";
 
 // [components]
 import { StartPage } from "./components/StartPage";
@@ -10,20 +10,30 @@ import Modal from "./components/Modal";
 import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "./styles/globalStyle";
 import { theme } from "./styles/theme";
+import { AnimatePresence } from "framer-motion";
 
 // @@ App
 function App() {
   const [gameState, setGameState] = useState<GameState>("START");
+  const [turn, setTurn] = useState<Turn>("X");
 
-  const startGame = (turn: InitTurn) => turn && setGameState("GAME");
+  const startGame = (turn: InitTurn) => {
+    if (!turn) return;
+    setGameState("GAME");
+    setTurn(turn);
+  };
   const restartGame = () => setGameState("GAME");
 
   return (
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
-        {gameState === "START" && <StartPage startGame={startGame} />}
-        {gameState === "GAME" && <Board />}
+        <AnimatePresence>
+          {gameState === "START" && (
+            <StartPage startGame={startGame} key="start_container" />
+          )}
+        </AnimatePresence>
+        {gameState === "GAME" && <Board turn={turn} setTurn={setTurn} />}
         {gameState === "OVER" && (
           <Modal restartGame={restartGame} winner="DRAW" />
         )}

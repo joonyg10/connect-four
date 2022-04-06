@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import Cell from "../Cell";
 
-import { Turn } from "../../Types";
 import { checkGameEnd } from "../../utils/checkGameEnd";
+import { Turn } from "../../Types";
+interface Props {
+  turn: Turn;
+  setTurn: React.Dispatch<SetStateAction<Turn>>;
+}
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
 const variants = {
@@ -12,16 +16,16 @@ const variants = {
     scale: 0,
   },
   pop: {
-    scale: [0.5, 1, 1.25, 0.85, 1],
+    scale: [0, 0.5, 1, 1.25, 0.85, 1],
     transition: {
       type: "tween",
       duration: 0.5,
+      delay: 1,
     },
   },
 };
 
-export const Board = () => {
-  const [turn, setTurn] = useState<Turn>("X");
+export const Board = ({ turn, setTurn }: Props) => {
   const [board, setBoard] = useState<string[][]>(BOARD);
 
   const clickCell = (row: number, col: number) => {
