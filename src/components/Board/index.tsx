@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Cell from "../Cell";
 
 import { checkGameEnd } from "../../utils/checkGameEnd";
+import { popUp } from "../../constant/variants";
 import { Turn } from "../../Types";
 interface Props {
   turn: Turn;
@@ -11,19 +12,6 @@ interface Props {
 }
 
 const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
-const variants = {
-  initial: {
-    scale: 0,
-  },
-  pop: {
-    scale: [0, 0.5, 1, 1.25, 0.85, 1],
-    transition: {
-      type: "tween",
-      duration: 0.5,
-      delay: 1,
-    },
-  },
-};
 
 export const Board = ({ turn, setTurn }: Props) => {
   const [board, setBoard] = useState<string[][]>(BOARD);
@@ -73,7 +61,7 @@ export const Board = ({ turn, setTurn }: Props) => {
 const Container = styled(motion.section).attrs(() => ({
   initial: "initial",
   animate: "pop",
-  variants,
+  variants: popUp,
 }))<{ turn: string }>`
   ${({ theme }) => theme.grid__center};
 
