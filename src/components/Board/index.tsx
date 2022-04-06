@@ -14,6 +14,7 @@ interface Props {
 }
 
 const SIDE = 9;
+let isAnimate: boolean = false;
 
 export const Board = ({ turn, setTurn, showResult }: Props) => {
   const [board, setBoard] = useState<string[][]>([]);
@@ -22,6 +23,7 @@ export const Board = ({ turn, setTurn, showResult }: Props) => {
   const clickCell = (row: number, col: number) => {
     // 이미 점령되어 있는 칸이라면 pass
     if (board[row][col] !== "") return;
+    if (isAnimate) return;
 
     const newBoard = [...board];
     updateBoard(newBoard, row, col);
@@ -34,9 +36,8 @@ export const Board = ({ turn, setTurn, showResult }: Props) => {
   };
 
   const changeTurn = () => {
-    setTimeout(() => {
-      setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
-    }, 300);
+    setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
+
     setLeftCells((prevCells) => prevCells - 1);
   };
 
@@ -102,8 +103,12 @@ const CellWrapper = styled.div<{ turn: string; isOccupied: boolean }>`
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-color: ${({ theme, turn }) =>
-      turn === "X" ? theme.color.red : theme.color.blue};
+    background-color: ${({ theme, turn, isOccupied }) =>
+      isOccupied
+        ? "transparent"
+        : turn === "X"
+        ? theme.color.red
+        : theme.color.blue};
     border-radius: 0.5em;
     opacity: 0;
     transition: opacity 350ms ease-out;
