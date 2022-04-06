@@ -5,17 +5,22 @@ import Cell from "../Cell";
 
 import { checkGameEnd } from "../../utils/checkGameEnd";
 import { popUp } from "../../constant/variants";
-import { Turn, GameState } from "../../Types";
+import { Turn, Winner } from "../../Types";
+
 interface Props {
   turn: Turn;
   setTurn: React.Dispatch<SetStateAction<Turn>>;
-  setGameState: React.Dispatch<SetStateAction<GameState>>;
+  showResult: (winner: Winner) => void;
 }
 
-const BOARD: string[][] = Array.from({ length: 9 }, (_) => Array(9).fill(""));
+const SIDE = 9;
+const BOARD: string[][] = Array.from({ length: SIDE }, (_) =>
+  Array(SIDE).fill("")
+);
 
-export const Board = ({ turn, setTurn, setGameState }: Props) => {
+export const Board = ({ turn, setTurn, showResult }: Props) => {
   const [board, setBoard] = useState<string[][]>(BOARD);
+  const [leftCells, setLeftCells] = useState<number>(SIDE ** 2);
 
   const clickCell = (row: number, col: number) => {
     // 이미 점령되어 있는 칸이라면 pass
@@ -25,14 +30,18 @@ export const Board = ({ turn, setTurn, setGameState }: Props) => {
     updateBoard(newBoard, row, col);
 
     const isGameEnd = checkGameEnd({ newBoard, row, col, flag: turn });
-    if (isGameEnd) setGameState("OVER");
+    if (isGameEnd) showResult(turn);
+
+    if (leftCells === 1) showResult("DRAW");
     changeTurn();
   };
 
-  const changeTurn = () =>
+  const changeTurn = () => {
     setTimeout(() => {
       setTurn((prevTurn) => (prevTurn === "X" ? "O" : "X"));
     }, 300);
+    setLeftCells((prevCells) => prevCells - 1);
+  };
 
   const updateBoard = (newBoard: string[][], row: number, col: number) => {
     newBoard[row][col] = turn;

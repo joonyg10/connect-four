@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InitTurn, GameState, Turn } from "./Types";
+import { InitTurn, GameState, Turn, Winner } from "./Types";
 
 // [components]
 import { StartPage } from "./components/StartPage";
@@ -16,13 +16,19 @@ import { AnimatePresence } from "framer-motion";
 function App() {
   const [gameState, setGameState] = useState<GameState>("START");
   const [turn, setTurn] = useState<Turn>("X");
+  const [winner, setWinner] = useState<Winner>("DRAW");
 
   const startGame = (turn: InitTurn) => {
     if (!turn) return;
     setGameState("GAME");
     setTurn(turn);
   };
-  const restartGame = () => setGameState("GAME");
+
+  const restartGame = () => setGameState("START");
+  const showResult = (winner: Winner) => {
+    setGameState("OVER");
+    setWinner(winner);
+  };
 
   return (
     <>
@@ -34,10 +40,10 @@ function App() {
           )}
         </AnimatePresence>
         {gameState === "GAME" && (
-          <Board turn={turn} setTurn={setTurn} setGameState={setGameState} />
+          <Board turn={turn} setTurn={setTurn} showResult={showResult} />
         )}
         {gameState === "OVER" && (
-          <Modal restartGame={restartGame} winner="DRAW" />
+          <Modal restartGame={restartGame} winner={winner} />
         )}
       </ThemeProvider>
     </>
