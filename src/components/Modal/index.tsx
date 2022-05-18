@@ -1,11 +1,13 @@
 import styled from "styled-components";
+import { Winner } from "../../Types";
+
 import { motion } from "framer-motion";
 
 import { Button } from "../Button";
 import { popUp, backDrop } from "../../constant/variants";
 
 interface Props {
-  winner: "X" | "O" | "DRAW";
+  winner: Winner;
   restartGame: () => void;
 }
 
