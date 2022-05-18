@@ -1,47 +1,26 @@
 import { useState } from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import { Button } from "../Button";
 import { InitTurn, Turn } from "../../Types";
 
-interface Props {
-  startGame: (turn: InitTurn) => void;
-}
+// @@ [components]
+import { Button } from "../Button";
 
+// @@ [styles]
+import styled from "styled-components";
+import { motion } from "framer-motion";
+
+// @@ [constant]
+import { swirlFadeOut } from "../../constant/variants";
 const BTN: [Turn, string][] = [
   ["O", "blue"],
   ["X", "red"],
 ];
 
-const variants = {
-  initial: {
-    scale: 0,
-  },
-  animate: {
-    scale: [0, 0.5, 1, 1.25, 0.85, 1],
-    transition: {
-      type: "tween",
-      duration: 0.3,
-      staggerChildren: 1,
-    },
-  },
-
-  exit: {
-    originX: 0.5,
-    originY: 1.5,
-    scale: [1.25, 0.85, 1, 0.75, 0.5, 0.25, 0],
-    rotate: [0, -60, -120, -180, -240, -300, -360],
-    transition: {
-      type: "linear",
-      ease: "easeInOut",
-      duration: 0.5,
-      when: "afterChildren",
-    },
-  },
-};
+interface Props {
+  startGame: (turn: InitTurn) => void;
+}
 
 export const StartPage = ({ startGame }: Props) => {
-  const [selectedBtn, setSelectedBtn] = useState<InitTurn>(undefined);
+  const [selectedBtn, setSelectedBtn] = useState<InitTurn>(null);
 
   return (
     <Container>
@@ -64,11 +43,11 @@ export const StartPage = ({ startGame }: Props) => {
   );
 };
 
-const Container = styled(motion.div).attrs(() => ({
+const Container = styled(motion.section).attrs(() => ({
   initial: "initial",
   animate: "animate",
   exit: "exit",
-  variants,
+  variants: swirlFadeOut,
 }))`
   ${({ theme }) => theme.utils.grid__center};
 `;
